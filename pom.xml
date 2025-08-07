@@ -4,14 +4,18 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>acme-scheduler</groupId>
-    <artifactId>milton</artifactId>
+    <groupId>milton</groupId>
+    <artifactId>Milton</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>auth-server</module>
+        <module>resource-server</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>24</maven.compiler.source>
         <maven.compiler.target>24</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
+    <packaging>pom</packaging>
 </project>
