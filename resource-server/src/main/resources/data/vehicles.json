@@ -1,9 +1,38 @@
-{
-  "vin": "JH4KA3270LC001300",
-  "year": "2024",
-  "make": "Ford",
-  "model": "Bronco",
-  "color": "Blue",
-  "licensePlate": "CL87593",
-  "licensePlateState": "DE"
-}
+[
+  {
+    "vin": "JH4KA3270LC001300",
+    "year": "2024",
+    "make": "Ford",
+    "model": "Bronco",
+    "color": "Blue",
+    "licensePlate": "CL87593",
+    "licensePlateState": "DE"
+  },
+  {
+    "vin": "JH4KK3270LC001300",
+    "year": "2022",
+    "make": "Dodge",
+    "model": "Viper",
+    "color": "White",
+    "licensePlate": "CL66593",
+    "licensePlateState": "TX"
+  },
+  {
+    "vin": "JH4KA3270LC004400",
+    "year": "2019",
+    "make": "Toyota",
+    "model": "Corella",
+    "color": "Red",
+    "licensePlate": "CL69993",
+    "licensePlateState": "CA"
+  },
+  {
+    "vin": "XH4KA3270LC001300",
+    "year": "2025",
+    "make": "Dodge",
+    "model": "Dakota",
+    "color": "White",
+    "licensePlate": "LL66593",
+    "licensePlateState": "TX"
+  }
+]

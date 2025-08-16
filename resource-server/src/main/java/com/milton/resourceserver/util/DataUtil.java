@@ -12,8 +12,8 @@ public class DataUtil {
 
     public static List<Vehicle> getVehicleData() {
 
-        String fileUrl = Paths.get("src/test", "resources",
-                "customerTestData.json").toFile().toURI().toString();
+        String fileUrl = Paths.get("resource-server/src/main1", "resources", "data",
+                "vehicles.json").toFile().toURI().toString();
         String jsonString = ResourceUtil.getResourceAsString(fileUrl);
         ObjectMapper mapper = new ObjectMapper();
         try {

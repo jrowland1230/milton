@@ -1,5 +1,6 @@
 package com.milton.authserver.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -17,17 +18,21 @@ import org.springframework.security.web.SecurityFilterChain;
 import java.util.UUID;
 
 @Configuration
+@Slf4j
 public class AuthServerConfig {
 
     @Bean
     public RegisteredClientRepository registeredClientRepository() {
         RegisteredClient registeredClient = RegisteredClient.withId(UUID.randomUUID().toString())
-                .clientId("golf-client")
-                .clientSecret(passwordEncoder().encode("golf-secret"))
+                .clientId("milton-client")
+                .clientSecret(passwordEncoder().encode("milton-secret"))
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
                 .scope("read")
                 .build();
+
+        log.info("Registered Client: {}", registeredClient.getClientId());
+
         return new InMemoryRegisteredClientRepository(registeredClient);
     }
 
