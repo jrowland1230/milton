@@ -6,7 +6,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.constraints.NotBlank;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,13 +30,7 @@ public class VehicleController {
             @ApiResponse(responseCode = "400", description = "Bad Request / Error in the request payload"),
             @ApiResponse(responseCode = "500", description = "internal server error") })
     public ResponseEntity<List<Vehicle>> getVehicles(@PathVariable("make") @NotBlank String make) {
-
         List<Vehicle> vehicles = vehicleService.getVehicles(make);
-
-        if (vehicles != null) {
-            return ResponseEntity.ok(vehicles);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
+        return ResponseEntity.ok(vehicles);
     }
 }

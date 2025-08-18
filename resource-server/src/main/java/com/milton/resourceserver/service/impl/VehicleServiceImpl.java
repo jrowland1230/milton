@@ -1,10 +1,13 @@
 package com.milton.resourceserver.service.impl;
 
+import com.milton.resourceserver.error.ErrorCode;
+import com.milton.resourceserver.exception.MiltonException;
 import com.milton.resourceserver.model.Vehicle;
 import com.milton.resourceserver.service.VehicleService;
 import com.milton.resourceserver.util.DataUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,6 +15,7 @@ import java.util.List;
 @Slf4j
 @Service
 public class VehicleServiceImpl implements VehicleService {
+
     @Override
     public List<Vehicle> getVehicles(String make) {
 
@@ -26,8 +30,10 @@ public class VehicleServiceImpl implements VehicleService {
             log.info("Returned vehicles count: {}", vehicles.size());
             return vehicles;
         } catch (Exception exception) {
-            log.error("Error retrieving vehicles with message: {}", exception.getMessage(), exception);
-            return List.of();
+            String errorMessage = String.format("Unable to retrieve vehicles for parameter: %s", make);
+            log.error(errorMessage, exception);
+            throw new MiltonException(HttpStatus.BAD_REQUEST,
+                    ErrorCode.MILTON_SERVICE_BAD_REQUEST_ERROR, errorMessage);
         }
     }
 }

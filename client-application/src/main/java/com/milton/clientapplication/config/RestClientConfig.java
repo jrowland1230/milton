@@ -1,4 +1,4 @@
-package com.milton.clientapplication.client;
+package com.milton.clientapplication.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

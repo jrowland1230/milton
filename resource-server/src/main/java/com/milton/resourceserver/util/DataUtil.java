@@ -12,7 +12,7 @@ public class DataUtil {
 
     public static List<Vehicle> getVehicleData() {
 
-        String fileUrl = Paths.get("resource-server/src/main1", "resources", "data",
+        String fileUrl = Paths.get("resource-server/src/main", "resources", "data",
                 "vehicles.json").toFile().toURI().toString();
         String jsonString = ResourceUtil.getResourceAsString(fileUrl);
         ObjectMapper mapper = new ObjectMapper();
