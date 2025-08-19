@@ -1,7 +1,7 @@
 package com.milton.resourceserver.service.impl;
 
 import com.milton.resourceserver.error.ErrorCode;
-import com.milton.resourceserver.exception.MiltonException;
+import com.milton.resourceserver.exception.MiltonResourceException;
 import com.milton.resourceserver.model.Vehicle;
 import com.milton.resourceserver.service.VehicleService;
 import com.milton.resourceserver.util.DataUtil;
@@ -32,7 +32,7 @@ public class VehicleServiceImpl implements VehicleService {
         } catch (Exception exception) {
             String errorMessage = String.format("Unable to retrieve vehicles for parameter: %s", make);
             log.error(errorMessage, exception);
-            throw new MiltonException(HttpStatus.BAD_REQUEST,
+            throw new MiltonResourceException(HttpStatus.BAD_REQUEST,
                     ErrorCode.MILTON_SERVICE_BAD_REQUEST_ERROR, errorMessage);
         }
     }

@@ -29,7 +29,6 @@ public class VehicleController {
             @ApiResponse(responseCode = "400", description = "Bad Request / Error in the request payload"),
             @ApiResponse(responseCode = "500", description = "internal server error")})
     public ResponseEntity<List<Vehicle>> getVehicles(@PathVariable("make") @NotBlank String make) {
-
         List<Vehicle> vehicles = vehicleService.getVehicles(make);
         return ResponseEntity.ok(vehicles);
     }

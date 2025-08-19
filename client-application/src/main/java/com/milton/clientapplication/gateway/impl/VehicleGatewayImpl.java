@@ -7,6 +7,7 @@ import com.milton.clientapplication.model.Vehicle;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -27,26 +28,23 @@ public class VehicleGatewayImpl implements VehicleGateway {
     }
     @Override
     public List<Vehicle> getVehiclesByMake(String make) {
-        try {
-            String uriString = UriComponentsBuilder.fromUriString("http://localhost:8081/api/v1/vehicles/make/")
-                    .path(make).toUriString();;
 
-            Vehicle[] vehicles = restClient.get().uri(uriString)
-                    .attributes(clientRegistrationId("milton-client"))
-                    .retrieve()
-                    .body(Vehicle[].class);
+        String uriString = UriComponentsBuilder.fromUriString("http://localhost:8081/api/v1/vehicles/make/")
+                .path(make).toUriString();;
 
-            if (ObjectUtils.isNotEmpty(vehicles)) {
-                return Arrays.asList(vehicles);
-            } else {
-                return List.of();
-            }
+        Vehicle[] vehicles = restClient.get().uri(uriString)
+                .attributes(clientRegistrationId("milton-client"))
+                .retrieve()
+                .onStatus(HttpStatusCode::is4xxClientError, ((request, response) -> {
+                    throw new MiltonClientException((HttpStatus)response.getStatusCode(),
+                            ErrorCode.MILTON_SERVICE_GATEWAY_ERROR, "My Error Message");
+                }))
+                .body(Vehicle[].class);
 
-
-        } catch (Exception exception) {
-            log.error("");
-            throw new MiltonClientException(HttpStatus.INTERNAL_SERVER_ERROR, ErrorCode.MILTON_SERVICE_GATEWAY_ERROR,
-                    exception.getMessage(), exception);
+        if (ObjectUtils.isNotEmpty(vehicles)) {
+            return Arrays.asList(vehicles);
+        } else {
+            return List.of();
         }
     }
 }

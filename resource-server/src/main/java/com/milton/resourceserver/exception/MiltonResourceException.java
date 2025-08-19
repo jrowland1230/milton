@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 
 import java.io.Serial;
 
-public class MiltonException extends RuntimeException{
+public class MiltonResourceException extends RuntimeException{
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -17,7 +17,7 @@ public class MiltonException extends RuntimeException{
     @Getter
     private final Throwable exception;
 
-    public MiltonException(HttpStatus httpStatus, ErrorCode code, String message) {
+    public MiltonResourceException(HttpStatus httpStatus, ErrorCode code, String message) {
         super(message);
         this.httpStatus = httpStatus;
         this.code = code;
@@ -25,7 +25,7 @@ public class MiltonException extends RuntimeException{
         this.exception = null;
     }
 
-    public MiltonException(HttpStatus httpStatus, ErrorCode code, String message, Throwable exception) {
+    public MiltonResourceException(HttpStatus httpStatus, ErrorCode code, String message, Throwable exception) {
         super(message);
         this.httpStatus = httpStatus;
         this.code = code;
