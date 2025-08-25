@@ -9,8 +9,9 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestClient;
+import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
+import reactor.core.publisher.Mono;
 
 import java.util.Arrays;
 import java.util.List;
@@ -21,10 +22,10 @@ import static org.springframework.security.oauth2.client.web.client.RequestAttri
 @Slf4j
 public class VehicleGatewayImpl implements VehicleGateway {
 
-    private final RestClient restClient;
+    private final WebClient webClient;
 
-    public VehicleGatewayImpl(RestClient restClient) {
-        this.restClient = restClient;
+    public VehicleGatewayImpl(WebClient restClient) {
+        this.webClient = restClient;
     }
     @Override
     public List<Vehicle> getVehiclesByMake(String make) {
@@ -32,17 +33,16 @@ public class VehicleGatewayImpl implements VehicleGateway {
         String uriString = UriComponentsBuilder.fromUriString("http://localhost:8081/api/v1/vehicles/make/")
                 .path(make).toUriString();;
 
-        Vehicle[] vehicles = restClient.get().uri(uriString)
-                .attributes(clientRegistrationId("milton-client"))
+        Mono<Vehicle[]> vehicles = webClient.get().uri(uriString)
+                //.attributes(clientRegistrationId("milton-client"))
                 .retrieve()
-                .onStatus(HttpStatusCode::is4xxClientError, ((request, response) -> {
-                    throw new MiltonClientException((HttpStatus)response.getStatusCode(),
-                            ErrorCode.MILTON_SERVICE_GATEWAY_ERROR, "My Error Message");
-                }))
-                .body(Vehicle[].class);
+                .onStatus(HttpStatus.INTERNAL_SERVER_ERROR::equals, response -> {
+                    throw new MiltonClientException(HttpStatus.BAD_REQUEST, ErrorCode.MILTON_SERVICE_GATEWAY_ERROR, "My Error Message");
+                }).bodyToMono(Vehicle[].class);
 
         if (ObjectUtils.isNotEmpty(vehicles)) {
-            return Arrays.asList(vehicles);
+            return null;
+            //return Arrays.asList(vehicles);
         } else {
             return List.of();
         }

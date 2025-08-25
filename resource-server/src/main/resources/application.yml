@@ -9,6 +9,9 @@ spring:
           # URI of the OpenID Connect Provider (also known as the Authorization Server) that issues the JWT tokens.
           # This is a crucial configuration for JWT validation.
           issuer-uri: http://localhost:9000
+management:
+  endpoint:
+    health:
 server:
   port: 8081
 logging:

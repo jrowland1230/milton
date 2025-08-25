@@ -1,4 +1,4 @@
-package com.milton.resourceserver.controller;
+package com.milton.authserver.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,8 +13,8 @@ public class HealthController {
         return ResponseEntity.status(HttpStatus.OK).body("Ping OK");
     }
 
-//    @GetMapping("/actuator/health")
-//    public ResponseEntity<Object> health() {
-//        return ResponseEntity.status(HttpStatus.OK).body("Health Ok");
-//    }
+    @GetMapping("/actuator/health")
+    public ResponseEntity<Object> health() {
+        return ResponseEntity.status(HttpStatus.OK).body("Health Ok");
+    }
 }
